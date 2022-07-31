@@ -1,8 +1,9 @@
 const time = document.querySelector('.time')
 const date = document.querySelector('.date')
+const greeting = document.querySelector('.greeting')
 
 
-function showDate() {
+const showDate = () => {
     let dateValue = new Date();
 
     const options = {
@@ -15,11 +16,27 @@ function showDate() {
     date.textContent = currentDate
 }
 
+const showGreeting = () => {
+    const timeOfDay = getTimeOfDay()
+    const greetingText = `Good ${timeOfDay}`
+    greeting.textContent = greetingText
+}
+
 const showTime = () => {
     const date = new Date()
     time.textContent = date.toLocaleTimeString()
-
-    setInterval(showDate, 1000)
-    setInterval(showTime, 1000)
+    
+    setTimeout(showDate, 1000)
+    setTimeout(showTime, 1000)
+    setTimeout(showGreeting, 1000)
 }
+
+const getTimeOfDay = () => {
+    const listTimeOfDay = ['morning', 'afternoon', 'evening', 'night']
+    const date = new Date()
+    const hours = date.getHours()
+    return listTimeOfDay[Math.floor(hours / 8)]
+}
+
+
 showTime()
