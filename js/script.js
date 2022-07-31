@@ -1,6 +1,8 @@
 const time = document.querySelector('.time')
 const date = document.querySelector('.date')
 const greeting = document.querySelector('.greeting')
+const userName = document.querySelector('.name')
+
 
 
 const showDate = () => {
@@ -38,5 +40,19 @@ const getTimeOfDay = () => {
     return listTimeOfDay[Math.floor(hours / 8)]
 }
 
+const setLocalStorage = () => {
+    localStorage.setItem('name', userName.value);
+}
+
+const getLocalStorage = () => {
+    if(localStorage.getItem('name')) {
+        userName.value = localStorage.getItem('name');
+    }
+}
+
 
 showTime()
+
+
+window.addEventListener('beforeunload', setLocalStorage)
+window.addEventListener('load', getLocalStorage)
