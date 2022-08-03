@@ -2,7 +2,9 @@ const time = document.querySelector('.time')
 const date = document.querySelector('.date')
 const greeting = document.querySelector('.greeting')
 const userName = document.querySelector('.name')
+const body = document.querySelector('.body')
 
+let randomNum
 
 
 const showDate = () => {
@@ -50,8 +52,32 @@ const getLocalStorage = () => {
     }
 }
 
+function getRandomNum(min, max) {
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
 
+const setBg = () => {
+    const timeOfDay = getTimeOfDay()
+    const bgNum = getRandomNum(1, 20).toString().padStart(2, "0")
+    body.style.backgroundImage = `url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg')`
+}
+
+const getSlideNext = () => {
+    
+}
+
+
+
+const getSlidePrev = () => {
+    
+}
+
+
+setBg()
 showTime()
+getRandomNum()
 
 
 window.addEventListener('beforeunload', setLocalStorage)
