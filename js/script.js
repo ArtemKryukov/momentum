@@ -3,6 +3,8 @@ const date = document.querySelector('.date')
 const greeting = document.querySelector('.greeting')
 const userName = document.querySelector('.name')
 const body = document.querySelector('.body')
+const slideNext = document.querySelector('.slide-next')
+const slidePrev = document.querySelector('.slide-prev')
 
 let randomNum
 
@@ -58,26 +60,49 @@ function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+
+
+
 const setBg = () => {
     const timeOfDay = getTimeOfDay()
     const bgNum = getRandomNum(1, 20).toString().padStart(2, "0")
     body.style.backgroundImage = `url('https://raw.githubusercontent.com/rolling-scopes-school/stage1-tasks/assets/images/${timeOfDay}/${bgNum}.jpg')`
 }
 
-const getSlideNext = () => {
-    
+const getSlideNext = (time, num) => {
+    const timeOfDay = getTimeOfDay()
+    const bgNum = getRandomNum(1, 20).toString().padStart(2, "0")
+    if(randomNum < 20) {
+        randomNum = randomNum + 1
+        setBg(time, num)
+    }else if(randomNum === 20){
+        randomNum = 1
+        setBg(timeOfDay, bgNum)
+    }
+    console.log(randomNum)
 }
-
-
 
 const getSlidePrev = () => {
-    
+    if(randomNum < 20 ){
+        randomNum = randomNum - 1
+        setBg(time, num)
+    }else if(randomNum === 0){
+        randomNum = 20
+        setBg(time, num)
+    }
+    console.log(randomNum)
 }
 
+
+
+slideNext.addEventListener('click', getSlideNext)
+slidePrev.addEventListener('click', getSlidePrev)
 
 setBg()
 showTime()
 getRandomNum()
+getSlideNext()
+getSlidePrev()
 
 
 window.addEventListener('beforeunload', setLocalStorage)
