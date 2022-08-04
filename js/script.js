@@ -5,7 +5,12 @@ const userName = document.querySelector('.name')
 const body = document.querySelector('.body')
 const slideNext = document.querySelector('.slide-next')
 const slidePrev = document.querySelector('.slide-prev')
-
+const weatherIcon = document.querySelector('.weather-icon')
+const temperature = document.querySelector('.temperature')
+const weatherDescription = document.querySelector('.weather-description')
+const wind = document.querySelector('.wind')
+const humidity = document.querySelector('.humidity')
+const city = document.querySelector('.city')
 let randomNum = 0
 
 
@@ -100,6 +105,23 @@ const getSlidePrev = () => {
 
 slideNext.addEventListener('click', getSlideNext)
 slidePrev.addEventListener('click', getSlidePrev)
+
+async function getWeather() {  
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.value}&lang=en&appid=e3fef2a7b08b7bd928d47588a5a7e892&units=metric?`
+    const res = await fetch(url)
+    const data = await res.json() 
+    
+    weatherIcon.className = 'weather-icon owf';
+    weatherIcon.classList.add(`owf-${data.weather[0].id}`)
+    wind.textContent = `Wind speed: ${Math.floor(data.wind.speed)} m/s`
+    humidity.textContent = `Humidity: ${data.main.humidity}%`
+    temperature.textContent = `${Math.floor(data.main.temp / 10)}°C`
+    weatherDescription.textContent = data.weather[0].description
+}
+
+city.addEventListener('change', getWeather)
+
+
 
 setBg()
 showTime()
