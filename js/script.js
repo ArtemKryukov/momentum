@@ -11,6 +11,10 @@ const weatherDescription = document.querySelector('.weather-description')
 const wind = document.querySelector('.wind')
 const humidity = document.querySelector('.humidity')
 const city = document.querySelector('.city')
+const quote = document.querySelector('.quote')
+const author = document.querySelector('.author')
+const quoteChange = document.querySelector('.change-quote')
+
 let randomNum = 0
 
 
@@ -121,6 +125,18 @@ async function getWeather() {
 
 city.addEventListener('change', getWeather)
 
+const getQuotes = () => {
+    const quotes = 'data.json'
+    fetch(quotes)
+    .then(res => res.json())
+    .then(data => { 
+        const randomNum = Math.floor(Math.random() * data.length) +1
+        quote.textContent = data[randomNum].text
+        author.textContent = data[randomNum].author
+    })
+}
+quoteChange.addEventListener('click', getQuotes)
+
 
 
 setBg()
@@ -128,7 +144,7 @@ showTime()
 getRandomNum()
 getSlideNext()
 getSlidePrev()
-
+getQuotes()
 
 window.addEventListener('beforeunload', setLocalStorage)
 window.addEventListener('load', getLocalStorage)
