@@ -1,3 +1,5 @@
+import playList from './playList.js'
+console.log(playList)
 const time = document.querySelector('.time')
 const date = document.querySelector('.date')
 const greeting = document.querySelector('.greeting')
@@ -14,8 +16,13 @@ const city = document.querySelector('.city')
 const quote = document.querySelector('.quote')
 const author = document.querySelector('.author')
 const quoteChange = document.querySelector('.change-quote')
+const play = document.querySelector('.play')
+const isPlayPrev = document.querySelector('.play-prev')
+const isPlayNext = document.querySelector('.play-next')
 
 let randomNum = 0
+let isPlay = false
+let playNum = 0
 
 
 const showDate = () => {
@@ -102,7 +109,6 @@ const getSlidePrev = () => {
         randomNum = 20
         setBg(timeOfDay, bgNum)
     }
-    console.log(randomNum)
 }
 
 
@@ -138,6 +144,41 @@ const getQuotes = () => {
 quoteChange.addEventListener('click', getQuotes)
 
 
+const audio = new Audio()
+
+const playAudio = () => {
+    audio.src = playList[playNum].src
+    if(!isPlay) {
+        play.classList.add('pause')
+        audio.currentTime = 0
+        isPlay = true
+        audio.play()
+    }
+    else{
+        isPlay = false
+        play.classList.remove('pause')
+        audio.pause()
+    }
+}
+
+play.addEventListener('click', playAudio);
+
+
+const playNext = () => {
+    for(let i = 0; i < playList.length; i++){
+        playNum++
+        playAudio()
+    }
+}
+isPlayNext.addEventListener('click', playNext)
+
+const playPrev = () => {
+    for(let i = 0; i < playList.length; i--){
+        playNum--
+        playAudio()
+    }
+}
+isPlayPrev.addEventListener('click', playPrev)
 
 setBg()
 showTime()
@@ -145,6 +186,7 @@ getRandomNum()
 getSlideNext()
 getSlidePrev()
 getQuotes()
+
 
 window.addEventListener('beforeunload', setLocalStorage)
 window.addEventListener('load', getLocalStorage)
