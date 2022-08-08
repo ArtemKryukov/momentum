@@ -1,5 +1,5 @@
 import playList from './playList.js'
-console.log(playList)
+
 const time = document.querySelector('.time')
 const date = document.querySelector('.date')
 const greeting = document.querySelector('.greeting')
@@ -19,10 +19,14 @@ const quoteChange = document.querySelector('.change-quote')
 const play = document.querySelector('.play')
 const isPlayPrev = document.querySelector('.play-prev')
 const isPlayNext = document.querySelector('.play-next')
+const playLists = document.querySelector('.play-list')
+
 
 let randomNum = 0
 let isPlay = false
 let playNum = 0
+
+
 
 
 const showDate = () => {
@@ -54,10 +58,10 @@ const showTime = () => {
 }
 
 const getTimeOfDay = () => {
-    const listTimeOfDay = ['morning', 'afternoon', 'evening', 'night']
+    const listTimeOfDay = ['night', 'morning', 'afternoon', 'evening']
     const date = new Date()
     const hours = date.getHours()
-    return listTimeOfDay[Math.floor(hours / 8)]
+    return listTimeOfDay[Math.floor(hours / 6)]
 }
 
 const setLocalStorage = () => {
@@ -156,7 +160,7 @@ const playAudio = () => {
     }
     else{
         isPlay = false
-        play.classList.remove('pause')
+        // play.classList.remove('pause')
         audio.pause()
     }
 }
@@ -165,20 +169,31 @@ play.addEventListener('click', playAudio);
 
 
 const playNext = () => {
-    for(let i = 0; i < playList.length; i++){
-        playNum++
-        playAudio()
+    if(playNum === playList.length){
+        playNum = 0
     }
+    playNum++
+    playAudio()
+    console.log(playNum)
 }
 isPlayNext.addEventListener('click', playNext)
 
 const playPrev = () => {
-    for(let i = 0; i < playList.length; i--){
+    if(playNum === 0){
+        playNum = playList.length
+    }
         playNum--
         playAudio()
-    }
+        console.log(playNum)
 }
 isPlayPrev.addEventListener('click', playPrev)
+
+playList.forEach(el => {
+    const li = document.createElement('li')
+    li.classList.add('play-item')
+    li.textContent = el.title
+    playLists.append(li)
+})
 
 setBg()
 showTime()
