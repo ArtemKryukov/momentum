@@ -8,4 +8,5 @@
 3. The ability to add or change the username while saving the name in localStorage
 4. Implemented slider
 5. Add quotes to HTML page from .json file
+6. Create player
 
