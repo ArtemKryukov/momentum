@@ -9,4 +9,5 @@
 4. Implemented slider
 5. Add quotes to HTML page from .json file
 6. Create player
+7. The user can find out what the weather is like in his or another city
 
